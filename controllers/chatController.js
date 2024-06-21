@@ -29,9 +29,11 @@ exports.getChat = async (req, res, next) => {
 };
 
 exports.createChat = async (req, res, next) => {
-  
+  console.log("x");
   const doctor = await Doctor.findById(req.body.doctorId);
-
+  if (!doctor) {
+    return next(new AppError("Enter a valid doctor id", 400));
+  }
   console.log(doctor);
   const order = new ChatOrder({
     user: req.user._id,
@@ -83,7 +85,7 @@ exports.createChat = async (req, res, next) => {
   //   messages: [],
   // });
 
-  // res.status(201).json({ status: "success", data: { chat: newChat } });
+  res.status(201).json({ status: "success", data: { chat: newChat } });
 };
 
 exports.getAllChatForCurLoggedIn = async (req, res, next) => {
