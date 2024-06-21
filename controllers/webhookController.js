@@ -2,7 +2,7 @@ const { PaymentGateway, paymobAPI } = require("../services/PaymentGetaway.js");
 
 const Order = require("../models/orderModel");
 const ChatOrder = require("../models/chatOrderModel.js");
-
+const Chat = require("../models/chatModel.js");
 const Doctor = require("../models/doctorModel");
 const User = require("../models/userModel.js");
 
@@ -46,21 +46,49 @@ exports.webhook = catchAsync(async (req, res, next) => {
     }
   );
 
+  if (order) {
+    const appointment = new Appointment({
+      user: order.user,
+      doctor: order.doctor,
+      startTime: order.startTime,
+      endTime: order.endTime,
+      status: "pending",
+    });
+    await appointment.save();
+    return res.status(200).json({
+      status: "success",
+    });
+  }
+  order = await ChatOrder.findByIdAndUpdate(
+    orderId,
+    {
+      isPaid: true,
+      transactionId: paymobAns?.obj?.id,
+      paidAt: Date.now(),
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  if (order) {
+    const chat = new Chat({
+      user: order.user,
+      doctor: order.doctor,
+      messages: [],
+    });
+    await chat.save();
+
+    return res.status(200).json({
+      status: "success",
+    });
+  }
+
   if (!order) {
     return next(new AppError("Order not found", 404));
   }
 
-  const appointment = new Appointment({
-    user: order.user,
-    doctor: order.doctor,
-    startTime: order.startTime,
-    endTime: order.endTime,
-    status: "pending",
-  });
-
-  await appointment.save();
-
-  return res.status(200).json({
-    status: "success",
-  });
+  // return res.status(200).json({
+  //   status: "success",
+  // });
 });
