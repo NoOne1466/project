@@ -28,6 +28,7 @@ const chatSchema = new mongoose.Schema({
       },
     },
   ],
+  createdAt: Date,
 });
 
 const Chat = mongoose.model("Chat", chatSchema);

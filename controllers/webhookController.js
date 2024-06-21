@@ -76,6 +76,7 @@ exports.webhook = catchAsync(async (req, res, next) => {
       user: order.user,
       doctor: order.doctor,
       messages: [],
+      createdAt: Date.now(),
     });
     await chat.save();
 
