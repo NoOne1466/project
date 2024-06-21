@@ -25,7 +25,7 @@ router.patch("/resetPassword", authController.resetPassword(Doctor));
 //   .route("/:doctorId/reviews")
 //   .post(reviewDoctorsController.createNewReview);
 
-// router.use(authController.protect);
+router.use(authController.protect);
 router.get(
   "/me",
   authController.protect,
