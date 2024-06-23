@@ -267,54 +267,54 @@ exports.refund = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.webhook = catchAsync(async (req, res, next) => {
-  const paymobAns = req.body;
-  const hmac = req.query.hmac;
+// exports.webhook = catchAsync(async (req, res, next) => {
+//   const paymobAns = req.body;
+//   const hmac = req.query.hmac;
 
-  if (!hmac) return next(new AppError("HMAC is required", 400));
-  if (!paymobAns) return next(new AppError("Invalid request", 400));
-  if (!PaymentGateway.verifyHmac(paymobAns, hmac, process.env.HMAC_SECRET))
-    return next(new AppError("Invalid HMAC", 400));
+//   if (!hmac) return next(new AppError("HMAC is required", 400));
+//   if (!paymobAns) return next(new AppError("Invalid request", 400));
+//   if (!PaymentGateway.verifyHmac(paymobAns, hmac, process.env.HMAC_SECRET))
+//     return next(new AppError("Invalid HMAC", 400));
 
-  if (paymobAns.type !== "TRANSACTION") {
-    return res.status(200).json({
-      status: "success",
-    });
-  }
-  if (paymobAns.obj.success !== true)
-    return next(new AppError("Transaction failed", 400));
+//   if (paymobAns.type !== "TRANSACTION") {
+//     return res.status(200).json({
+//       status: "success",
+//     });
+//   }
+//   if (paymobAns.obj.success !== true)
+//     return next(new AppError("Transaction failed", 400));
 
-  const orderId = paymobAns?.obj?.order?.merchant_order_id;
-  let order;
+//   const orderId = paymobAns?.obj?.order?.merchant_order_id;
+//   let order;
 
-  order = await Order.findByIdAndUpdate(
-    orderId,
-    {
-      isPaid: true,
-      transactionId: paymobAns?.obj?.id,
-      paidAt: Date.now(),
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+//   order = await Order.findByIdAndUpdate(
+//     orderId,
+//     {
+//       isPaid: true,
+//       transactionId: paymobAns?.obj?.id,
+//       paidAt: Date.now(),
+//     },
+//     {
+//       new: true,
+//       runValidators: true,
+//     }
+//   );
 
-  if (!order) {
-    return next(new AppError("Order not found", 404));
-  }
+//   if (!order) {
+//     return next(new AppError("Order not found", 404));
+//   }
 
-  const appointment = new Appointment({
-    user: order.user,
-    doctor: order.doctor,
-    startTime: order.startTime,
-    endTime: order.endTime,
-    status: "pending",
-  });
+//   const appointment = new Appointment({
+//     user: order.user,
+//     doctor: order.doctor,
+//     startTime: order.startTime,
+//     endTime: order.endTime,
+//     status: "pending",
+//   });
 
-  await appointment.save();
+//   await appointment.save();
 
-  return res.status(200).json({
-    status: "success",
-  });
-});
+//   return res.status(200).json({
+//     status: "success",
+//   });
+// });

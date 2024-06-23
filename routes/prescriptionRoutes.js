@@ -7,6 +7,12 @@ const router = express.Router();
 
 router.use(authController.protect);
 
+router.get(
+  "/getAllPrescriptionForCurrentPerson",
+  authController.protect,
+  prescriptionController.getAllPrescriptionForCurrentPerson
+);
+
 router.post(
   "/add-prescription",
   authController.protect,

@@ -32,7 +32,7 @@ const prescriptionSchema = new mongoose.Schema({
   },
   type: Number,
   image: {
-    type: String,
+    type: [String],
   },
 });
 

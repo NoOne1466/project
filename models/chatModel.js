@@ -29,6 +29,10 @@ const chatSchema = new mongoose.Schema({
     },
   ],
   createdAt: Date,
+  read: Boolean,
+  delivered: Boolean,
+  sent: Boolean,
+  typing: Boolean,
 });
 
 const Chat = mongoose.model("Chat", chatSchema);

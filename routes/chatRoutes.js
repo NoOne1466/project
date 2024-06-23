@@ -5,6 +5,7 @@ const authController = require("./../controllers/authController");
 const router = express.Router();
 
 router.route("/").post(authController.protect, chatController.createChat);
+// .get(authController.protect, chatController.getAll);
 
 router.route("/getChat").get(authController.protect, chatController.getChat);
 

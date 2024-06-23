@@ -50,3 +50,32 @@ exports.addPrescription = catchAsync(async (req, res, next) => {
     },
   });
 });
+exports.getAllPrescriptionForCurrentPerson = catchAsync(
+  async (req, res, next) => {
+    let prescriptions;
+    // console.log(req.user.id);
+    if (req.user) {
+      prescriptions = await Prescription.find({
+        user: req.user.id,
+      });
+      console.log(prescriptions);
+    } else if (req.doctor) {
+      prescriptions = await Prescription.find({
+        doctor: req.doctor.id,
+      });
+      console.log(prescriptions);
+    }
+
+    // console.log(chat);
+    if (!prescriptions) {
+      return next(
+        new AppError(
+          "There are not chats for the current logged in person.",
+          400
+        )
+      );
+    }
+
+    res.status(200).json({ status: "success", data: { prescriptions } });
+  }
+);

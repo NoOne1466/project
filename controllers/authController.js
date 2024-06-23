@@ -283,13 +283,13 @@ exports.restrictToSuperAdmin = (req, res, next) => {
 exports.handleGoogleCallback = async (req, res) => {
   try {
     const { given_name, family_name, email } = req.user._json;
-    console.log(given_name, family_name, email);
+    // console.log(given_name, family_name, email);
     let user = await User.findOne({ email });
 
-    const defaultPassword = generatePassword();
     // console.log("password", defaultPassword);
 
     if (!user) {
+      const defaultPassword = generatePassword();
       user = await User.create({
         firstName: given_name,
         lastName: family_name,

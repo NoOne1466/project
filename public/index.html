@@ -34,7 +34,7 @@
         }
       }
 
-      const chatId = "666b12b710ad9cca8a673c15"; // Replace with actual chat ID
+      const chatId = "6677ed916bbba35c59d8a8fd"; // Replace with actual chat ID
       socket.emit("joinRoom", { chatId });
 
       const messageForm = document.getElementById("messageForm");
@@ -45,7 +45,7 @@
         e.preventDefault();
         const message = messageInput.value;
         console.log(messageInput);
-        socket.emit("chatMessage", { chatId, sender: "user", message });
+        socket.emit("chatMessage", { chatId, sender: "doctor", message });
         messageInput.value = "";
       });
 
