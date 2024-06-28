@@ -17,6 +17,7 @@ const AppError = require("./utils/appError");
 const doctorRouter = require("./routes/doctorRoutes");
 const userRouter = require("./routes/userRoutes");
 const adminRouter = require("./routes/adminRoutes");
+const cors = require("cors");
 
 // const favoriteRouter = require("./routes/favoriteRoutes.js");
 const reviewDoctorsRouter = require("./routes/reviewDoctorsRoutes");
