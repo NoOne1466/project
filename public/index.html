@@ -18,22 +18,6 @@
     <script>
       const socket = io();
 
-      async function getChat(userId, doctorId) {
-        const response = await fetch(`/api/v1/chats/chat`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userId, doctorId }),
-        });
-        const data = await response.json();
-        if (data.status === "success") {
-          return data.data.chat;
-        } else {
-          throw new Error("Chat not found");
-        }
-      }
-
       const chatId = "6677ed916bbba35c59d8a8fd"; // Replace with actual chat ID
       socket.emit("joinRoom", { chatId });
 

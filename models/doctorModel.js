@@ -99,6 +99,7 @@ const doctorSchema = new mongoose.Schema(
       default: null,
     },
     speciality: String,
+
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetOtp: String,

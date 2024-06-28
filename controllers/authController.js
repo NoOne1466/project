@@ -78,6 +78,12 @@ exports.signup = (Model) =>
       medicalId: req.body.medicalId,
       availableSlots: req.body.availableSlots,
       hospitals: req.body.hospitals,
+      phoneNumber: req.body.phoneNumber,
+      gender: req.body.gender,
+      speciality: req.body.speciality,
+      yearsOfExperience: req.body.yearsOfExperience,
+      location: req.body.location,
+      dateOfBirth: req.body.dateOfBirth,
     });
 
     createSendToken(newUser, 201, res);

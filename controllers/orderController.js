@@ -96,7 +96,7 @@ exports.createOrder = catchAsync(async (req, res, next) => {
   const doctor = await Doctor.findById(req.body.doctorId);
 
   console.log("doctor", doctor._id);
-  console.log("user", req.user._id);
+  console.log("user", req.user);
 
   if (!doctor) {
     return next(new AppError("No doctor found with that ID", 404));

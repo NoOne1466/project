@@ -42,6 +42,8 @@ const passport = require("passport");
 // start express with const app
 const app = express();
 
+app.use(cors());
+
 //
 app.set("view engine", "ejs");
 
@@ -150,6 +152,15 @@ app.use((err, req, res, next) => {
     message: err.message,
     error: err,
   });
+});
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // Allow all origins
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS"); // Allow methods
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  ); // Allow headers
+  next();
 });
 
 module.exports = app;
