@@ -10,8 +10,13 @@ exports.setDoctorUserIds = (req, res, next) => {
   next();
 };
 
-exports.getAllReviews = factory.getAll(ReviewDoctors);
+// exports.getAllReviews = factory.getAll(ReviewDoctors);
 exports.createNewReview = factory.createOne(ReviewDoctors);
 exports.getReview = factory.getOne(ReviewDoctors);
 exports.updateReview = factory.updateOne(ReviewDoctors);
 exports.deleteReview = factory.deleteOne(ReviewDoctors);
+
+exports.getAllReviews = async (req, res, next) => {
+  const doc = await ReviewDoctors.find();
+  console.log(doc);
+};

@@ -150,6 +150,10 @@ doctorSchema.virtual("reviews", {
 doctorSchema.virtual("splitAvailableSlots").get(function () {
   const doctor = this;
 
+  if (!doctor.availableSlots || !Array.isArray(doctor.availableSlots)) {
+    return [];
+  }
+
   const getNextDayOfWeek = (day) => {
     const today = new Date();
     const resultDate = new Date(today.getTime());
