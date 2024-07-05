@@ -33,6 +33,12 @@ router
     factory.uploadPhoto,
     serviceController.updateService
   )
-  .delete(serviceController.deleteService);
+  .delete(
+    authController.protect,
+    authController.restrictTo("User"),
+    authController.restrictTo("Doctor"),
+    authController.restrictToSuperAdmin,
+    serviceController.deleteService
+  );
 
 module.exports = router;
