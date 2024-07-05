@@ -27,6 +27,8 @@ exports.webhook = catchAsync(async (req, res, next) => {
       status: "success",
     });
   }
+  console.log(JSON.stringify(paymobAns));
+
   if (paymobAns.obj.success !== true)
     return next(new AppError("Transaction failed", 400));
 
